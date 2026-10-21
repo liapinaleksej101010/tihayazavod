@@ -3,13 +3,13 @@
  * ------------------------------------------------------------
  * 1. LiveInternet — код счётчика уже стоит в подвале каждой страницы (блок #counters).
  *    Достаточно зарегистрировать сайт на liveinternet.ru/add.
- * 2. Sber Ads (Топ-100) — впишите номер проекта в sberAdsProjectId.
+ * 2. Sber Ads (Топ-100) — код счётчика (проект 7753172) уже стоит в начале <body> каждой страницы.
  * 3. MyTracker (Top.Mail.Ru) — впишите ID счётчика в myTrackerId.
  * Если в личном кабинете сервиса выдан код, отличающийся от кода ниже, —
  * используйте код из личного кабинета.
  */
 window.SITE_ANALYTICS = {
-  sberAdsProjectId: null, // например: 7712345
+  sberAdsProjectId: 7753172, // справочно: код счётчика стоит в каждой HTML-странице
   myTrackerId: null       // например: "3512345"
 };
 
@@ -27,27 +27,10 @@ window.SITE_ANALYTICS = {
 (function () {
   var cfg = window.SITE_ANALYTICS;
 
-  /* ---------- Sber Ads (бывший Рамблер/Топ-100) ---------- */
-  if (cfg.sberAdsProjectId) {
-    (function (w, d, c) {
-      (w[c] = w[c] || []).push(function () {
-        var options = {
-          project: cfg.sberAdsProjectId,
-          element: "top100_widget",       // счётчик-кнопка в подвале
-          trackHashes: true,              // учёт хэшей (#rods, #lesson-1 …)
-          attributes_dataset: ["analytics-block"] // аналитика блоков: data-analytics-block
-        };
-        try { w.top100Counter = new top100(options); } catch (e) {}
-      });
-      var n = d.getElementsByTagName("script")[0],
-          s = d.createElement("script"),
-          f = function () { n.parentNode.insertBefore(s, n); };
-      s.type = "text/javascript";
-      s.async = true;
-      s.src = "https://st.top100.ru/top100/top100.js";
-      if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
-    })(window, document, "_top100q");
-  }
+  /* ---------- Sber Ads (бывший Рамблер/Топ-100) ----------
+   * Код счётчика (проект 7753172) вставлен в начало <body> каждой страницы.
+   * Здесь он не подключается повторно; trackGoal() ниже использует window.top100Counter.
+   */
 
   /* ---------- MyTracker / Top.Mail.Ru ---------- */
   if (cfg.myTrackerId) {

@@ -13,6 +13,37 @@
 <script src="js/analytics.js"></script>
 </head>
 <body>
+<!-- Top100 (Kraken) Counter -->
+<script>
+    (function (w, d, c) {
+    (w[c] = w[c] || []).push(function() {
+        var options = {
+            project: 7753172,
+            attributes_dataset: [ "analytics-block" ],
+            trackHashes: true,
+        };
+        try {
+            w.top100Counter = new top100(options);
+        } catch(e) { }
+    });
+    var n = d.getElementsByTagName("script")[0],
+    s = d.createElement("script"),
+    f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src =
+    (d.location.protocol == "https:" ? "https:" : "http:") +
+    "//st.top100.ru/top100/top100.js";
+
+    if (w.opera == "[object Opera]") {
+    d.addEventListener("DOMContentLoaded", f, false);
+} else { f(); }
+})(window, document, "_top100q");
+</script>
+<noscript>
+  <img src="//counter.rambler.ru/top100.cnt?pid=7753172" alt="Топ-100" />
+</noscript>
+<!-- END Top100 (Kraken) Counter -->
 <header class="topbar" data-analytics-block="header">
   <div class="wrap">
     <a class="logo" href="index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#1b4a52"/><path d="M16 4v5" stroke="#e9f1ef" stroke-width="1.6"/><path d="M16 9c-3.5 0-3.5 8 0 9.5 3.5-1.5 3.5-9.5 0-9.5z" fill="#d9432a"/><path d="M16 18.5c-2.6 0-2.6 4.5 0 5 2.6-.5 2.6-5 0-5z" fill="#fff"/><path d="M4 22c4-2 8 2 12 0s8-2 12 0" stroke="#e9f1ef" stroke-width="1.4" fill="none"/></svg>Тихая заводь</a>
@@ -53,7 +84,6 @@ alt=""/></a><script>(function(d,s){d.getElementById("licntB48A").src=
 (s.colorDepth?s.colorDepth:s.pixelDepth))+";u"+escape(d.URL)+
 ";h"+escape(d.title.substring(0,150))+";"+Math.random()})
 (document,screen)</script><!--/LiveInternet-->
-        <div id="top100_widget"></div>
       </div>
     </div>
   </div>
