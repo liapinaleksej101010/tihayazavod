@@ -4,13 +4,13 @@
  * 1. LiveInternet — код счётчика уже стоит в подвале каждой страницы (блок #counters).
  *    Достаточно зарегистрировать сайт на liveinternet.ru/add.
  * 2. Sber Ads (Топ-100) — код счётчика (проект 7753172) уже стоит в начале <body> каждой страницы.
- * 3. MyTracker (Top.Mail.Ru) — впишите ID счётчика в myTrackerId.
+ * 3. MyTracker (Top.Mail.Ru) — код счётчика (ID 3807149) уже стоит в начале <body> каждой страницы.
  * Если в личном кабинете сервиса выдан код, отличающийся от кода ниже, —
  * используйте код из личного кабинета.
  */
 window.SITE_ANALYTICS = {
   sberAdsProjectId: 7753172, // справочно: код счётчика стоит в каждой HTML-странице
-  myTrackerId: null       // например: "3512345"
+  myTrackerId: "3807149"  // нужен для отправки целей; код счётчика стоит в каждой HTML-странице
 };
 
 /* Список событий/целей сайта (идентификаторы для настройки в сервисах):
@@ -32,18 +32,10 @@ window.SITE_ANALYTICS = {
    * Здесь он не подключается повторно; trackGoal() ниже использует window.top100Counter.
    */
 
-  /* ---------- MyTracker / Top.Mail.Ru ---------- */
-  if (cfg.myTrackerId) {
-    var _tmr = window._tmr || (window._tmr = []);
-    _tmr.push({ id: cfg.myTrackerId, type: "pageView", start: (new Date()).getTime() });
-    (function (d, w, id) {
-      if (d.getElementById(id)) return;
-      var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
-      ts.src = "https://top-fwz1.mail.ru/js/code.js";
-      var f = function () { var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s); };
-      if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
-    })(document, window, "tmr-code");
-  }
+  /* ---------- MyTracker / Top.Mail.Ru ----------
+   * Код счётчика (ID 3807149) вставлен в начало <body> каждой страницы, здесь повторно не подключается.
+   * trackGoal() ниже отправляет цели через _tmr.push({type: "reachGoal", ...}).
+   */
 
   /* ---------- Единая функция отправки событий ---------- */
   window.trackGoal = function (goal, params) {
@@ -55,7 +47,7 @@ window.SITE_ANALYTICS = {
     } catch (e) {}
     try {
       if (cfg.myTrackerId) {
-        window._tmr.push({ type: "reachGoal", id: cfg.myTrackerId, goal: goal, params: params });
+        (window._tmr = window._tmr || []).push({ type: "reachGoal", id: cfg.myTrackerId, goal: goal, params: params });
       }
     } catch (e) {}
     if (window.console) console.log("[analytics] событие:", goal, params);
